@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>放大镜</title>
+</head>
+<style>
+*{
+	margin:0;
+	padding: 0;
+	list-style: none;
+}
+.container{
+	margin:50px 0 0 100px;
+}
+#small{
+	position: relative;
+	width:400px;
+}
+#small >img{
+   width: 400px;
+   height: 500px;
+   vertical-align: top;
+}
+#small >span{
+	width: 40px;
+   height: 40px;
+   background-color: green;
+   opacity: 0.4;
+   position: absolute;
+   left: 0;
+   top: 0;
+   cursor: pointer;
+}
+#big{
+	position: absolute;
+	left: 520px;
+	top:0;
+	overflow: hidden;
+	width: 600px;
+   height: 600px;
+   display: none;
+}
+ul>li>img{ 
+	float: left;
+	width: 78px;
+	height: 100px;
+	border: 1px solid blue;
+}
+ul{
+	margin:30px 0 0 0x;
+}
+body{
+	height: 3000px;
+}
+</style>
+<body>
+	<div class='container'>
+
+	<div id='small'>
+		<span></span>
+		<img src="D:\img\name600.jpg" alt="">
+	</div>
+
+	<div id='big'><img src="D:\img\name600.jpg"></div>
+
+	<ul>
+		<li><img src="D:\img\name600.jpg" alt=""></li>
+		<li><img src="D:\img\name601.jpg" alt=""></li>
+		<li><img src="D:\img\name602.jpg" alt=""></li>
+		<li><img src="D:\img\name603.jpg" alt=""></li>
+		<li><img src="D:\img\name604.jpg" alt=""></li>
+	</ul>
+
+	</div>
+<script>
+    var span=document.getElementsByTagName('span')[0];
+    var small=document.getElementById('small');
+    var big=document.getElementById('big');
+
+    small.addEventListener("mousemove",function(e){
+    	console.log('sssss')
+    	lf=e.pageX-small.offsetLeft-20;
+    	tp=e.pageY-small.offsetTop-20;
+    	console.log(lf,tp,e.pageX)
+    	  	if (lf <0){
+    		lf=0
+    	}
+    	//p判断当鼠标向右移动超过图片时，span的位置等于small宽度（严谨的话还应减去border宽度）
+    	else if(lf>small.offsetWidth-20){
+    		lf=small.offsetWidth-40
+    	}
+		else if (tp <0){
+    		tp=0
+    	}
+    	else if(tp>small.offsetHeight){
+    		tp=small.offsetHeight-40
+    	}
+  
+    	span.style.left=lf+'px';
+    	span.style.top=tp+'px';
+    	console.log(lf,small.style['width'],small.clientHeight)
+    	blf=big.offsetWidth/small.offsetWidth * lf
+    	btp=big.offsetHeight/small.offsetHeight * tp
+    	big.children[0].style.position='absolute'
+    	big.children[0].style.left=-blf+'px'
+    	big.children[0].style.top=-btp+'px'
+
+    })
+
+    small.addEventListener('mouseover',function(){
+    	big.style.display='block'
+    })
+     small.addEventListener('mouseout',function(){
+    	big.style.display='none'
+    })  
+    lis=document.getElementsByTagName('li')
+    for(var i=0;i<lis.length;i++){
+    	
+    	lis[i].addEventListener('mouseover',function(){
+    		small.children[1].src=this.children[0].src
+    		big.children[0].src=this.children[0].src
+    	})
+    	
+    }
+
+</script>
+</body>
+</html>
