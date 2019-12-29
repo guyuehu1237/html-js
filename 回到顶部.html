@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>回到顶部</title>
+	<style>
+	body{
+		height: 3000px;
+		background-color: green;
+	}
+	div{
+		width: 40px;
+		height: 40px;
+		background-color: red;
+		position: fixed;
+		bottom: 100px;
+		right: 0;
+		color:blue;
+		text-align: center;
+		vertical-align: middle;
+		cursor: pointer;
+	}
+	</style>
+</head>
+<body>
+<div>回到顶部</div>
+<script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+<script>
+	$(document).ready(function(){
+		//document.scrollTop>0,图标显示。
+		
+		var intervalID
+		$(document).scroll(
+
+			function(){
+			sTop=document.documentElement.scrollTop || document.body.scrollTop;
+			console.log(sTop);
+			if(sTop>0){
+				$('div').css('display','block')
+		}else{
+				$('div').css('display','none')
+		}
+			})
+	
+
+		$('div').mouseover(
+			function(event){
+				clearInterval(intervalID);
+				intervalID=setInterval(function(){
+					var fal=0,sTop=document.documentElement.scrollTop || document.body.scrollTop;
+					step=(fal-sTop)*0.2;
+					$(document).scrollTop(sTop+step);
+					if(sTop==0){
+						clearInterval(intervalID)
+					}
+					console.log('11111'+sTop)
+				},100)
+			event.preventDefault();	
+			}),
+		$('div').mouseout(function(){
+			clearInterval(intervalID)
+		})
+	}
+		
+	)
+</script>
+</body>
+</html>
